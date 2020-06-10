@@ -1,10 +1,8 @@
-require 'bcrypt'
-
-# Schema: User(user_name:string, password_digest:string, email:string)
-
 class User < ApplicationRecord
   has_secure_password
-
-  validates :user_name, presence: true
-  validates :email, presence: true, uniqueness: true
+    
+  validates :username, presence: true
+  validates :email, presence: true
+  validates :email, uniqueness: true
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 end

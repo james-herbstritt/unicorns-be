@@ -3,5 +3,4 @@ namespace :start do
   task start: :environment do
     system 'rails server -p 9000'
   end
-
 end
