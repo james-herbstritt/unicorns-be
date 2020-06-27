@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
 
   def is_logged_in?
     if logged_in? && current_user
-      render json: { logged_in: true, user: @user  }
+      render json: { logged_in: true, user: current_user  }
     else
       render json: { logged_in: false, message: 'no such user' }
     end
@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
   private
 
   def session_params
-    params.require(:user).permit(:username, :email, :password)
+    params.require(:user).permit(:email, :password)
   end
 
 end
