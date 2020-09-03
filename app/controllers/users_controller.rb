@@ -11,9 +11,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     if @user
-      render json: {
-        user: @user
-      }
+      render json: { user: @user }
     else
       render json: { status: :internal_server_error, errors: ['user not found'] }
     end
