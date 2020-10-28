@@ -1,26 +1,14 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
+  before_action :authenticate_request
+  attr_reader :current_user
 
-  helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!
+  private
 
-  def login!
-    session[:user_id] = @user.id
+  def authenticate_request
+    @current_user = AuthorizeApiRequest.call(request.headers).result
+    render json: { error: 'Not Authorized' }, status: 401 unless @current_user
   end
-
-  def logged_in?
-    !!session[:user_id]
-  end
-
-  def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
-  end
-
-  def authorized_user?
-    @user == current_user
-  end
-
-  def logout!
-    session.clear
-  end
-
 end
