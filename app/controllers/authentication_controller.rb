@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-# controller for handling authentication
+# Controller for handling authentication
+# Not sure we need this
 class AuthenticationController < ApplicationController
   skip_before_action :authenticate_request
 

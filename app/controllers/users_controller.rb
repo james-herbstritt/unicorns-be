@@ -1,4 +1,9 @@
+# frozen_string_literal: true
+
+# Controller used for creating users, and giving acess to user content
 class UsersController < ApplicationController
+  skip_before_action :authenticate_request, only: [:create]
+
   def index
     @users = User.all
     if @users
@@ -20,7 +25,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      login!
       render json: { status: :created, user: @user }
     else
       render json: { status: :internal_server_error, errors: @user.errors.full_messages }
